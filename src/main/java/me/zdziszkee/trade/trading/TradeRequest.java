@@ -1,11 +1,11 @@
 package me.zdziszkee.trade.trading;
 
 public class TradeRequest {
-    private String sender;
-    private String receiver;
+    private final String sender;
+    private final String receiver;
     private long time;
 
-    public TradeRequest(String sender,String receiver) {
+    public TradeRequest(final String sender, final String receiver) {
         this.sender = sender;
         this.receiver = receiver;
 
