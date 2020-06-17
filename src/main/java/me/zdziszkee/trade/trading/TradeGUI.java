@@ -112,7 +112,6 @@ public class TradeGUI implements GUI {
             if(myItems.get(s)==null||myItems.get(s).getType()==Material.AIR){
                 myItems.put(s,itemStack);
                 updateInventories();
-                Bukkit.broadcastMessage("Pomyslanie dodano " + itemStack.toString());
                 thisPlayer.getInventory().setItem(slot,new ItemStack(Material.AIR));
                 return;
             }
