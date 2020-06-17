@@ -54,7 +54,7 @@ public class TradeUtils {
         if(!senderLocked){
             ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.GREEN + "Potwierdz wymiane");
+            itemMeta.setDisplayName(ChatColor.GREEN + "Confirm trade");
             itemStack.setItemMeta(itemMeta);
             return itemStack;}else
         {
@@ -65,7 +65,7 @@ public class TradeUtils {
         if(!receiverLocked){
             ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.GREEN + "Potwierdz wymiane");
+            itemMeta.setDisplayName(ChatColor.GREEN + "Confirm Trade");
             itemStack.setItemMeta(itemMeta);
             return itemStack;}else
         {
