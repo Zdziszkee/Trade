@@ -6,9 +6,12 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public interface GUI extends InventoryHolder {
-     void onGUIClick(Player whoClicked, int slot, Inventory clickedInventory, ItemStack clickedItem);
-     void onGUIClose(Player player);
-     void onGUIOpen(Player player);
-     void onPlayerInventoryClick(Player player, int slot);
+     void onGUIClick(final Player whoClicked, final int slot, final Inventory clickedInventory, final ItemStack clickedItem);
+
+     void onGUIClose(final Player player);
+
+     void onGUIOpen(final Player player);
+
+     void onPlayerInventoryClick(final Player player, final int slot);
 
 }

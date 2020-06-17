@@ -7,13 +7,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import java.util.ArrayList;
 
 public class TradeUtils {
 
     public static int convertToActiveSlot(int passiveSlot) {
-        int[] activeSlots = getActiveSlots();
-        int[] passiveSlots = getPassiveSlots();
+        final int[] activeSlots = getActiveSlots();
+        final int[] passiveSlots = getPassiveSlots();
         for (int i = 0; i < passiveSlots.length; i++) {
             if (passiveSlots[i] == passiveSlot) {
                 return activeSlots[i];
@@ -36,56 +37,62 @@ public class TradeUtils {
                 23, 24, 25, 26,
                 33, 34, 35};
     }
-    public static void removeItemFromTrade(Player player, ItemStack itemStack, Inventory inventory,int slot) {
-        if(itemStack != null&& itemStack.getType()!= Material.AIR) {
+
+    public static void removeItemFromTrade(final Player player, final ItemStack itemStack, final Inventory inventory, final int slot) {
+        if (itemStack != null && itemStack.getType() != Material.AIR) {
             player.getInventory().addItem(itemStack);
-            inventory.setItem(slot,new ItemStack(Material.AIR));
+            inventory.setItem(slot, new ItemStack(Material.AIR));
         }
-        }
-        public static void getDefaultContents(Inventory inventory,Player sender,Player receiver,boolean senderLocked, boolean receiverLocked){
-            inventory.setItem(4, getGlassPane(receiver, sender));
-            inventory.setItem(13, getGlassPane(receiver, sender));
-            inventory.setItem(22, getGlassPane(receiver, sender));
-            inventory.setItem(31, getGlassPane(receiver, sender));
-            inventory.setItem(30, getReceiverButton(senderLocked));
-            inventory.setItem(32, getSenderButton(receiverLocked));
     }
-    public static ItemStack getSenderButton(boolean senderLocked) {
-        if(!senderLocked){
-            ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
-            ItemMeta itemMeta = itemStack.getItemMeta();
+
+    public static void getDefaultContents(final Inventory inventory, final Player sender, final Player receiver, final boolean senderLocked, final boolean receiverLocked) {
+        inventory.setItem(4, getGlassPane(receiver, sender));
+        inventory.setItem(13, getGlassPane(receiver, sender));
+        inventory.setItem(22, getGlassPane(receiver, sender));
+        inventory.setItem(31, getGlassPane(receiver, sender));
+        inventory.setItem(30, getReceiverButton(senderLocked));
+        inventory.setItem(32, getSenderButton(receiverLocked));
+    }
+
+    public static ItemStack getSenderButton(final boolean senderLocked) {
+        if (!senderLocked) {
+            final ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
+            final ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(ChatColor.GREEN + "Potwierdz wymiane");
             itemStack.setItemMeta(itemMeta);
-            return itemStack;}else
-        {
+            return itemStack;
+        } else {
             return getReadyButton();
         }
     }
-    public static ItemStack getReceiverButton(boolean receiverLocked) {
-        if(!receiverLocked){
-            ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
-            ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.GREEN + "Potwierdz wymiane");
+
+    public static ItemStack getReceiverButton(final boolean receiverLocked) {
+        if (!receiverLocked) {
+            final ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
+            final ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName(ChatColor.GREEN + "Confirm trade");
             itemStack.setItemMeta(itemMeta);
-            return itemStack;}else
-        {
+            return itemStack;
+        } else {
             return getReadyButton();
         }
     }
-    public static ItemStack getReadyButton(){
-        ItemStack itemStack = new ItemStack(Material.INK_SACK,1, (short) 10);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.GREEN+"Potwiedziles gotowosc!");
+
+    public static ItemStack getReadyButton() {
+        final ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 10);
+        final ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.GREEN + "Confirm trade");
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
-    public static ItemStack getGlassPane(Player player1, Player player2) {
-        ItemStack itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
-        ItemMeta itemMeta = itemStack.getItemMeta();
+
+    public static ItemStack getGlassPane(final Player player1, final Player player2) {
+        final ItemStack itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
+        final ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemMeta.setDisplayName("§8§l<--");
-        ArrayList<String> lore = new ArrayList<String>();
+        ArrayList<String> lore = new ArrayList<>();
         lore.add("§8§l" + player1.getName());
         lore.add("§8§l" + "-->");
         lore.add("§8§l" + player2.getName());
@@ -94,20 +101,23 @@ public class TradeUtils {
         return itemStack;
     }
 
-   public static  int getFreeSlots(Player player){
-       int counter = 0;
+    public static int getFreeSlots(final Player player) {
+        int counter = 0;
         try {
-            for (int i =0;i<35;i++) {
+            for (int i = 0; i < 35; i++) {
                 if (player.getInventory().getItem(i).getType() == Material.AIR) {
                     counter++;
                 }
             }
-        }catch (NullPointerException e){counter++;}
-        return  counter;
-   }
-   public static int getFreeslot(Player player){
-      return   player.getInventory().firstEmpty();
-   }
+        } catch (NullPointerException e) {
+            counter++;
+        }
+        return counter;
+    }
+
+    public static int getFreeslot(final Player player) {
+        return player.getInventory().firstEmpty();
+    }
 
 }
 
