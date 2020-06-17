@@ -34,8 +34,8 @@ public class EntityClickEvent implements Listener {
                 final Player receiver = (Player) e.getRightClicked();
                 lastTrigger.put(sender.getName(), System.currentTimeMillis());
                 main.addTradeRequest(sender, new TradeRequest(sender, receiver));
-                sender.sendMessage(ChatColor.LIGHT_PURPLE + "You have sent trade request to " + receiver.getName());
-                receiver.sendMessage(ChatColor.LIGHT_PURPLE + "You received trade request from " + receiver.getName());
+                sender.sendMessage(ChatColor.LIGHT_PURPLE + "Wyslales prosbe o wymiane do " + receiver.getName());
+                receiver.sendMessage(ChatColor.LIGHT_PURPLE + "Otrzymales prosbe o wymiane od " + receiver.getName());
                 if (main.getTradeRequest(receiver) != null) {
                     final Player senderReceiver = main.getTradeRequest(sender).getReceiver();
                     final Player receiverReceiver = main.getTradeRequest(receiver).getReceiver();

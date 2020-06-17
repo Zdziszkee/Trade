@@ -23,7 +23,7 @@ public class TradeGUI implements GUI {
         this.main = main;
         this.thisPlayer = thisPlayer;
         this.otherPlayer = otherPlayer;
-        this.inventory = Bukkit.createInventory(this, 36, "§7§lWymiana z " + otherPlayer.getName());
+        this.inventory = Bukkit.createInventory(this, 36, "§7§lTrading with" + otherPlayer.getName());
         this.isAccepted = false;
         this.isClosed = false;
     }
@@ -62,9 +62,9 @@ public class TradeGUI implements GUI {
         //  giving back their items
 
         if (!(isAccepted && getOtherPlayerGUI().isAccepted())) {
+            this.isClosed = true;
             giveBackItems();
             if (!getOtherPlayerGUI().isClosed()) {
-                this.isClosed = true;
                 getOtherPlayerGUI().getThisPlayer().closeInventory();
             }
         }

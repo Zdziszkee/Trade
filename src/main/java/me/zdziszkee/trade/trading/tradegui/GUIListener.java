@@ -27,10 +27,12 @@ public class GUIListener implements Listener {
     @EventHandler
     public void onPlayerInvClick(final InventoryClickEvent e) {
         if (e.getWhoClicked().getOpenInventory().getTopInventory().getHolder() instanceof GUI) {
-            if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
-                e.setCancelled(true);
-                final GUI gui = (GUI) e.getInventory().getHolder();
-                gui.onPlayerInventoryClick((Player) e.getWhoClicked(), e.getSlot());
+            if (e.getClickedInventory().getType() != null) {
+                if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
+                    e.setCancelled(true);
+                    final GUI gui = (GUI) e.getInventory().getHolder();
+                    gui.onPlayerInventoryClick((Player) e.getWhoClicked(), e.getSlot());
+                }
             }
         }
     }
