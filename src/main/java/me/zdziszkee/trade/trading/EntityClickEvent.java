@@ -28,18 +28,15 @@ public class EntityClickEvent implements Listener {
                 if (last != null && System.currentTimeMillis() < last + 1000L) return;
                 lastTrigger.put(sender.getName(), System.currentTimeMillis());
                 main.getTradeRequestHashMap().put(sender.getName(), new TradeRequest(sender.getName(), receiver.getName()));
-                sender.sendMessage(ChatColor.LIGHT_PURPLE + "Wystales prosbe o trade do " + receiver.getName());
-                receiver.sendMessage(ChatColor.LIGHT_PURPLE + "Otrzymales Prosbe o trade od " + receiver.getName());
-                Bukkit.broadcastMessage("1");
-                if (main.getTradeRequestHashMap().get(receiver.getName()) != null) {
-                    Bukkit.broadcastMessage("2");
+                sender.sendMessage(ChatColor.LIGHT_PURPLE + "You have sent trade request to " + receiver.getName());
+                receiver.sendMessage(ChatColor.LIGHT_PURPLE + "You received trade request from " + receiver.getName());
+                    if (main.getTradeRequestHashMap().get(receiver.getName()) != null) {
                     String senderReceiver = main.getTradeRequestHashMap().get(sender.getName()).getReceiver();
                     String receiverReceiver = main.getTradeRequestHashMap().get(receiver.getName()).getReceiver();
                     if (senderReceiver.equals(receiver.getName()) && receiverReceiver.equals(sender.getName())) {
                         Trade trade = new Trade(sender,receiver,main);
                         main.getTradeHashMap().put(sender.getName(),trade);
-                        main.getTradeHashMap().put(receiver.getName(),trade);
-                        Bukkit.broadcastMessage("Rozpoczynanie wymiany...");
+                        main.getTradeHashMap().put(receiver.getName(),trade);               
                         trade.openInventories();
 
                     }
