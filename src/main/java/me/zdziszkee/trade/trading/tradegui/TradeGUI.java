@@ -113,7 +113,7 @@ public class TradeGUI implements GUI {
         }
         thisPlayer.closeInventory();
         otherPlayer.closeInventory();
-        main.removeTrade(thisPlayer.getName());
+        main.removeTrade(thisPlayer);
     }
 
     /**
@@ -122,11 +122,11 @@ public class TradeGUI implements GUI {
      * @return TradeGui object of player u are trading with
      */
     public TradeGUI getOtherPlayerGUI() {
-        if (!main.getTrade(thisPlayer.getName()).getReceiverTradeGUI().equals(this)) {
-            return main.getTrade(thisPlayer.getName()).getReceiverTradeGUI();
+        if (!main.getTrade(thisPlayer).getReceiverTradeGUI().equals(this)) {
+            return main.getTrade(thisPlayer).getReceiverTradeGUI();
         }
-        if (!main.getTrade(thisPlayer.getName()).getSenderTradeGUI().equals(this)) {
-            return main.getTrade(thisPlayer.getName()).getSenderTradeGUI();
+        if (!main.getTrade(thisPlayer).getSenderTradeGUI().equals(this)) {
+            return main.getTrade(thisPlayer).getSenderTradeGUI();
         }
         return null;
     }

@@ -33,13 +33,13 @@ public class EntityClickEvent implements Listener {
                 final Player sender = e.getPlayer();
                 final Player receiver = (Player) e.getRightClicked();
                 lastTrigger.put(sender.getName(), System.currentTimeMillis());
-                main.addTradeRequest(sender.getName(), new TradeRequest(sender.getName(), receiver.getName()));
+                main.addTradeRequest(sender, new TradeRequest(sender, receiver));
                 sender.sendMessage(ChatColor.LIGHT_PURPLE + "You have sent trade request to " + receiver.getName());
                 receiver.sendMessage(ChatColor.LIGHT_PURPLE + "You received trade request from " + receiver.getName());
-                if (main.getTradeRequest(receiver.getName()) != null) {
-                    final String senderReceiver = main.getTradeRequest(sender.getName()).getReceiver();
-                    final String receiverReceiver = main.getTradeRequest(receiver.getName()).getReceiver();
-                    if (senderReceiver.equals(receiver.getName()) && receiverReceiver.equals(sender.getName())) {
+                if (main.getTradeRequest(receiver) != null) {
+                    final Player senderReceiver = main.getTradeRequest(sender).getReceiver();
+                    final Player receiverReceiver = main.getTradeRequest(receiver).getReceiver();
+                    if (senderReceiver.equals(receiver) && receiverReceiver.equals(sender)) {
                         final Trade trade = new Trade(sender, receiver, main);
                         trade.openInventories();
 

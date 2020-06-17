@@ -14,8 +14,8 @@ public class Trade {
     public Trade(Player player1, Player player2, ZdziszkeeTrade zdziszkeeTrade) {
         senderTradeGUI = new TradeGUI(player1, player2, zdziszkeeTrade);
         receiverTradeGUI = new TradeGUI(player2, player1, zdziszkeeTrade);
-        zdziszkeeTrade.addTrade(player1.getName(), this);
-        zdziszkeeTrade.addTrade(player2.getName(), this);
+        zdziszkeeTrade.addTrade(player1, this);
+        zdziszkeeTrade.addTrade(player2, this);
     }
 
     public void openInventories() {
