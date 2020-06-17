@@ -62,9 +62,9 @@ public class TradeGUI implements GUI {
         //  giving back their items
 
         if (!(isAccepted && getOtherPlayerGUI().isAccepted())) {
+            this.isClosed = true;
             giveBackItems();
-            if (!getOtherPlayerGUI().isClosed()) {
-                this.isClosed = true;
+            if (!getOtherPlayerGUI().isClosed()) 
                 getOtherPlayerGUI().getThisPlayer().closeInventory();
             }
         }
