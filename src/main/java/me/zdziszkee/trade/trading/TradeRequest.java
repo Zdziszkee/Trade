@@ -1,6 +1,9 @@
 package me.zdziszkee.trade.trading;
 
 public class TradeRequest {
+    /**
+     * Class storing data about trade request
+     */
     private final String sender;
     private final String receiver;
     private long time;

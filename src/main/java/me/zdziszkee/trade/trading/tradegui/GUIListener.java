@@ -1,4 +1,4 @@
-package me.zdziszkee.trade.trading;
+package me.zdziszkee.trade.trading.tradegui;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +9,11 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 
 public class GUIListener implements Listener {
+    /**
+     * Events needed for GUI to work
+     *
+     * @param e event
+     */
     @EventHandler
     public void onInvClick(final InventoryClickEvent e) {
         if (e.getInventory().getHolder() instanceof GUI) {
