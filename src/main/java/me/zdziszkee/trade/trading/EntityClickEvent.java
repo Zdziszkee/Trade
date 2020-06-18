@@ -2,6 +2,7 @@ package me.zdziszkee.trade.trading;
 
 
 import me.zdziszkee.trade.ZdziszkeeTrade;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 public class EntityClickEvent implements Listener {
     private final ZdziszkeeTrade main;
-    private final Map<String, Long> lastTrigger = new HashMap<>();
+    private final Map<Player, Long> lastTrigger = new HashMap<>();
 
     public EntityClickEvent(final ZdziszkeeTrade main) {
         this.main = main;
@@ -29,15 +30,26 @@ public class EntityClickEvent implements Listener {
     public void onEntityClick(final PlayerInteractAtEntityEvent e) {
         if (e.getRightClicked() instanceof Player) {
             if (e.getPlayer().isSneaking()) {
-                final Long last = lastTrigger.get(e.getPlayer().getName());
-                if (last != null && System.currentTimeMillis() < last + 1000L) return;
+                final Long last = lastTrigger.get(e.getPlayer());
+                if (last != null && System.currentTimeMillis() < last + 3000L) return;
                 final Player sender = e.getPlayer();
                 final Player receiver = (Player) e.getRightClicked();
+
                 receiver.playSound(receiver.getLocation(), Sound.BURP, 3, 3);
-                lastTrigger.put(sender.getName(), System.currentTimeMillis());
+
+                lastTrigger.put(sender, System.currentTimeMillis());
                 main.addTradeRequest(sender, new TradeRequest(sender, receiver));
+
                 sender.sendMessage(ChatColor.GRAY + "You have sent trade request to " + ChatColor.DARK_GRAY + receiver.getName());
                 receiver.sendMessage(ChatColor.GRAY + "You have received trade request from " + ChatColor.DARK_GRAY + receiver.getName());
+
+                Bukkit.getScheduler().runTaskLater(main, new Runnable() {
+                    @Override
+                    public void run() {
+                        lastTrigger.remove(sender);
+                    }
+                }, 10000L);
+
                 if (main.getTradeRequest(receiver) != null) {
                     final Player senderReceiver = main.getTradeRequest(sender).getReceiver();
                     final Player receiverReceiver = main.getTradeRequest(receiver).getReceiver();

@@ -170,9 +170,11 @@ public class TradeGUI implements GUI {
      */
     public void removeItem(final int slot) {
         final ItemStack itemStack = myItems.get(slot);
-        myItems.remove(slot);
-        thisPlayer.getInventory().addItem(itemStack);
-        updateInventories();
+        if (itemStack != null) {
+            myItems.remove(slot);
+            thisPlayer.getInventory().addItem(itemStack);
+            updateInventories();
+        }
     }
 
     /**
