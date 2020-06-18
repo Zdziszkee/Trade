@@ -3,6 +3,7 @@ package me.zdziszkee.trade.trading;
 
 import me.zdziszkee.trade.ZdziszkeeTrade;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,10 +33,11 @@ public class EntityClickEvent implements Listener {
                 if (last != null && System.currentTimeMillis() < last + 1000L) return;
                 final Player sender = e.getPlayer();
                 final Player receiver = (Player) e.getRightClicked();
+                receiver.playSound(receiver.getLocation(), Sound.BURP, 3, 3);
                 lastTrigger.put(sender.getName(), System.currentTimeMillis());
                 main.addTradeRequest(sender, new TradeRequest(sender, receiver));
-                sender.sendMessage(ChatColor.LIGHT_PURPLE + "Wyslales prosbe o wymiane do " + receiver.getName());
-                receiver.sendMessage(ChatColor.LIGHT_PURPLE + "Otrzymales prosbe o wymiane od " + receiver.getName());
+                sender.sendMessage(ChatColor.GRAY + "You have sent trade request to " + ChatColor.DARK_GRAY + receiver.getName());
+                receiver.sendMessage(ChatColor.GRAY + "You have received trade request from" + ChatColor.DARK_GRAY + receiver.getName());
                 if (main.getTradeRequest(receiver) != null) {
                     final Player senderReceiver = main.getTradeRequest(sender).getReceiver();
                     final Player receiverReceiver = main.getTradeRequest(receiver).getReceiver();

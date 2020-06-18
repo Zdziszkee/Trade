@@ -3,6 +3,7 @@ package me.zdziszkee.trade.trading.tradegui;
 import me.zdziszkee.trade.ZdziszkeeTrade;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -111,6 +112,8 @@ public class TradeGUI implements GUI {
                 thisPlayer.getInventory().addItem(getOtherPlayerGUI().getMyItems().get(i));
             }
         }
+        thisPlayer.playSound(thisPlayer.getLocation(), Sound.ANVIL_BREAK, 3, 3);
+        otherPlayer.playSound(otherPlayer.getLocation(), Sound.ANVIL_BREAK, 3, 3);
         thisPlayer.closeInventory();
         otherPlayer.closeInventory();
         main.removeTrade(thisPlayer);
