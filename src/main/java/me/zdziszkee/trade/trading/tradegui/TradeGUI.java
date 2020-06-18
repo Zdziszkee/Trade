@@ -24,7 +24,7 @@ public class TradeGUI implements GUI {
         this.main = main;
         this.thisPlayer = thisPlayer;
         this.otherPlayer = otherPlayer;
-        this.inventory = Bukkit.createInventory(this, 36, "§7§lTrading with" + otherPlayer.getName());
+        this.inventory = Bukkit.createInventory(this, 36, "§7§lTrading with " + otherPlayer.getName());
         this.isAccepted = false;
         this.isClosed = false;
     }
