@@ -6,20 +6,17 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public interface GUI extends InventoryHolder {
-    /**
-     * Creating custom InventoryHolder for TradeGUI;
-     *
-     * @param whoClicked       player which triggered event
-     * @param slot             the slot player clicked
-     * @param clickedInventory the inventory player clicked
-     * @param clickedItem      the item player clicked
-     */
-    void onGUIClick(final Player whoClicked, final int slot, final Inventory clickedInventory, final ItemStack clickedItem);
 
-    void onGUIClose(final Player player);
+    default void onGUIClick(final Player whoClicked, final int slot, final Inventory clickedInventory, final ItemStack clickedItem) {
+    }
 
-    void onGUIOpen(final Player player);
+    default void onGUIClose(final Player player) {
+    }
 
-    void onPlayerInventoryClick(final Player player, final int slot);
+    default void onGUIOpen(final Player player) {
+    }
+
+    default void onPlayerInventoryClick(final Player player, final int slot) {
+    }
 
 }

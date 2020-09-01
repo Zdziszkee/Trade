@@ -1,13 +1,16 @@
 package me.zdziszkee.trade.trading.tradegui;
 
 import me.zdziszkee.trade.ZdziszkeeTrade;
+import me.zdziszkee.trade.configuration.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class TradeGUI implements GUI {
@@ -18,15 +21,21 @@ public class TradeGUI implements GUI {
     private final HashMap<Integer, ItemStack> myItems = new HashMap<>();
     private boolean isAccepted;
     private boolean isClosed;
+    private final Config config;
+    private final FileConfiguration fileConfiguration;
 
 
     public TradeGUI(final Player thisPlayer, final Player otherPlayer, final ZdziszkeeTrade main) {
         this.main = main;
         this.thisPlayer = thisPlayer;
         this.otherPlayer = otherPlayer;
-        this.inventory = Bukkit.createInventory(this, 36, "§7§lTrading with " + otherPlayer.getName());
+        this.inventory = Bukkit.createInventory(this, 36, "§7§lWymiana z " + otherPlayer.getName());
         this.isAccepted = false;
         this.isClosed = false;
+        this.config = main.getTradeLogs();
+        this.fileConfiguration = config.getConfig();
+        fileConfiguration.set(thisPlayer.getName() + "." + LocalDateTime.now().toString(), " Rozpoczeto wymiane z " + otherPlayer.getName());
+        config.saveConfig();
     }
 
     @Override
@@ -35,6 +44,7 @@ public class TradeGUI implements GUI {
 
         if (slot == 30) {
             this.isAccepted = true;
+            whoClicked.playSound(whoClicked.getLocation(), Sound.NOTE_BASS, 3, 3);
             updateInventories();
             if (getOtherPlayerGUI().isAccepted()) {
                 updateInventories();
@@ -61,7 +71,9 @@ public class TradeGUI implements GUI {
 
         // Logic which synchronize player trade gui closing and
         //  giving back their items
-
+        this.fileConfiguration.set(thisPlayer.getName() + "." + LocalDateTime.now().toString(), " " + thisPlayer.getName() + " zamknal okno wymiany z " + otherPlayer.getName());
+        config.saveConfig();
+        main.removeTradeRequest(player);
         if (!(isAccepted && getOtherPlayerGUI().isAccepted())) {
             this.isClosed = true;
             giveBackItems();
@@ -114,9 +126,14 @@ public class TradeGUI implements GUI {
         }
         thisPlayer.playSound(thisPlayer.getLocation(), Sound.ANVIL_BREAK, 3, 3);
         otherPlayer.playSound(otherPlayer.getLocation(), Sound.ANVIL_BREAK, 3, 3);
+        this.fileConfiguration.set(thisPlayer.getName() + "." + LocalDateTime.now().toString(), " Koniec wymiany " + thisPlayer.getName() + " z " + otherPlayer.getName());
+        this.fileConfiguration.set(otherPlayer.getName() + "." + LocalDateTime.now().toString(), " Koniec wymiany " + otherPlayer.getName() + " z " + thisPlayer.getName());
+        config.saveConfig();
         thisPlayer.closeInventory();
         otherPlayer.closeInventory();
         main.removeTrade(thisPlayer);
+
+
     }
 
     /**
@@ -147,6 +164,8 @@ public class TradeGUI implements GUI {
                     myItems.put(s, itemStack);
                     updateInventories();
                     thisPlayer.getInventory().setItem(slot, new ItemStack(Material.AIR));
+                    fileConfiguration.set(thisPlayer.getName() + "." + LocalDateTime.now().toString(), thisPlayer.getName() + " wklada do okna wymiany " + (itemStack.toString()));
+                    config.saveConfig();
                     return;
                 }
             }
@@ -174,6 +193,8 @@ public class TradeGUI implements GUI {
             myItems.remove(slot);
             thisPlayer.getInventory().addItem(itemStack);
             updateInventories();
+            fileConfiguration.set(thisPlayer.getName() + "." + LocalDateTime.now().toString(), thisPlayer.getName() + "wyjmuje z okna wymiany " + itemStack.toString());
+            config.saveConfig();
         }
     }
 

@@ -40,15 +40,10 @@ public class EntityClickEvent implements Listener {
                 lastTrigger.put(sender, System.currentTimeMillis());
                 main.addTradeRequest(sender, new TradeRequest(sender, receiver));
 
-                sender.sendMessage(ChatColor.GRAY + "You have sent trade request to " + ChatColor.DARK_GRAY + receiver.getName());
-                receiver.sendMessage(ChatColor.GRAY + "You have received trade request from " + ChatColor.DARK_GRAY + receiver.getName());
+                sender.sendMessage(ChatColor.GRAY + "Wysłałes prośbe o handel do " + ChatColor.DARK_GRAY + receiver.getName());
+                receiver.sendMessage(ChatColor.GRAY + "Otrzymałes prośbe o handel od " + ChatColor.DARK_GRAY + sender.getName());
 
-                Bukkit.getScheduler().runTaskLater(main, new Runnable() {
-                    @Override
-                    public void run() {
-                        lastTrigger.remove(sender);
-                    }
-                }, 10000L);
+                Bukkit.getScheduler().runTaskLater(main, () -> lastTrigger.remove(sender), 20 * 10L);
 
                 if (main.getTradeRequest(receiver) != null) {
                     final Player senderReceiver = main.getTradeRequest(sender).getReceiver();

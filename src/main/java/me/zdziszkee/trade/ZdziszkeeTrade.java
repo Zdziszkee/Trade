@@ -1,5 +1,6 @@
 package me.zdziszkee.trade;
 
+import me.zdziszkee.trade.configuration.Config;
 import me.zdziszkee.trade.trading.EntityClickEvent;
 import me.zdziszkee.trade.trading.Trade;
 import me.zdziszkee.trade.trading.TradeRequest;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ZdziszkeeTrade extends JavaPlugin {
+    Config tradeLogs;
     /**
      * Hashmap storing all active trades
      */
@@ -25,7 +27,14 @@ public final class ZdziszkeeTrade extends JavaPlugin {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntityClickEvent(this), this);
+        this.tradeLogs = new Config(this, "tradeLogs.yml");
+        this.tradeLogs.saveConfig();
 
+    }
+
+
+    public Config getTradeLogs() {
+        return tradeLogs;
     }
 
     /**
@@ -79,6 +88,10 @@ public final class ZdziszkeeTrade extends JavaPlugin {
      */
     public TradeRequest getTradeRequest(final Player player) {
         return tradeRequestHashMap.get(player);
+    }
+
+    public void removeTradeRequest(final Player player) {
+        tradeRequestHashMap.remove(player);
     }
 
 

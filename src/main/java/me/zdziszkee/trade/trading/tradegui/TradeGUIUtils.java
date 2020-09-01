@@ -64,7 +64,7 @@ public class TradeGUIUtils {
         if (!isLocked) {
             final ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
             final ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.GREEN + "Confirm Trade");
+            itemMeta.setDisplayName(ChatColor.GREEN + "Potwierdz wymiane");
             itemStack.setItemMeta(itemMeta);
             return itemStack;
         } else {
@@ -80,7 +80,7 @@ public class TradeGUIUtils {
     public static ItemStack getReadyButton() {
         final ItemStack itemStack = new ItemStack(Material.INK_SACK, 1, (short) 10);
         final ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.GREEN + "Trade confirmed!");
+        itemMeta.setDisplayName(ChatColor.GREEN + "Potwierdzono wymiane!");
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
